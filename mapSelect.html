@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>S.M.S.</title>
+  </head>
+
+  <body>
+    <div class="container glossy-background">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>StarCraft Map Selector</h1>
+        </div>
+      </div>
+
+      <hr />
+      <h3 class="text-center">Round Details</h3>
+      <h4>Player 1 Name</h4>
+      <input type="text" id="nameP1" class="form-control" />
+      <h4>Player 2 Name</h4>
+      <input type="text" id="nameP2" class="form-control" />
+      <h4>Player 1 Race</h4>
+      <input
+        type="text"
+        id="raceP1"
+        class="form-control"
+        placeholder="Enter P, T, or Z"
+      />
+      <h4>Player 2 Race</h4>
+      <input
+        type="text"
+        id="raceP2"
+        class="form-control"
+        placeholder="Enter P, T, or Z"
+      />
+      <h4>Round Type</h4>
+      <input
+        type="text"
+        id="roundType"
+        class="form-control"
+        placeholder="Enter 3, 5, or 7"
+      />
+      <hr />
+    </div>
+    <!-- Submit Button -->
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          type="submit"
+          class="btn btn-secondary btn-lg btn-block"
+          id="go"
+        >
+          <i class="fa fa-check-circle" aria-hidden="true"></i>Go!
+        </button>
+      </div>
+    </div>
+  
+    <!-- Map Display -->
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-md-8">
+          <div id="map-info"></div>
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+    </div>
+  
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="row">
+            <h5>P1</h5>
+            <br>
+            <p id="p1-name"></p>
+            <br>
+            <p id="p1-race"></p>
+            <br>
+            <button
+              id="p1-select-vote"
+              type="button"
+              class="btn btn-success p1-select-btn"
+            >
+              Select
+            </button>
+            <button
+              id="p1-veto-vote"
+              type="button"
+              class="btn btn-danger p1-veto-btn"
+            >
+              Veto
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <h5>P2</h5>
+            <br>
+            <p id="p2-name"></p>
+            <br>
+            <p id="p2-race"></p>
+            <br>
+            <button
+              id="p2-select-vote"
+              type="button"
+              class="btn btn-success p2-select-btn"
+            >
+              Select
+            </button>
+            <button
+              id="p2-veto-vote"
+              type="button"
+              class="btn btn-danger p2-veto-btn"
+            >
+              Veto
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="map-pool-title">Map Pool</h2>
+          <p>
+            If 1 or 2 Select votes, append map here...
+            If 1 Select and 1 Veto, or, 2 Vetoes, slice from map array
+          </p>
+          <span id="selected-maps"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <hr />
+    <footer class="footer"></footer>
+  </body>
+  <script type="text/javascript" src="./mapSelector.js"></script>
+</html>

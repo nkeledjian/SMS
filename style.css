@@ -1,0 +1,19 @@
+body {
+    background-image: linear-gradient(rgba(62, 20, 20, 0.205), rgba(62, 20, 20, 0.281)), url(SC.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+h1, h3, h4 {
+    color: white;
+}
+
+h2.map-pool-title {
+    color: black;
+    font-weight: 600;
+}
+
+h2.map-pool-card {
+    color: black;
+    font-weight: 600;
+}
