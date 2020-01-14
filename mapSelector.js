@@ -61,7 +61,7 @@ var zvzMaps = [
 var newRoundData = {};
 var selectedMapsPool = [];
 
-var roundType, p1name, p2name, pRace1, pRace2, bestOutOf, p1TotalVetoes, p2TotalVetoes, totalSelectVotes, totalVetoVotes;
+var roundType, p1name, p2name, pRace1, pRace2, bestOutOf, p1TotalVetoes, p2TotalVetoes, totalSelectVotes, totalVetoVotes, voteTimer;
 
 p1TotalVetoes = 3
 p2TotalVetoes = 3
@@ -72,32 +72,51 @@ const DOM = {
   p1SelectVote: document.querySelector("#p1-select-vote"),
   p1VetoVote: document.querySelector("#p1-veto-vote"),
   p2SelectVote: document.querySelector("#p2-select-vote"),
-  p2VetoVote: document.querySelector("#p2-veto-vote")
+  p2VetoVote: document.querySelector("#p2-veto-vote"),
+  start: document.querySelector("#go")
 }
 
-function playerVotes() {
-  // tally player select votes
+function voteCountChecker() {
+  if(totalSelectVotes == 1 || totalSelectVotes == 2) {
+    // run function to push map to Selected Maps Pool
+    // pushCurrentMap()
+  }
+
+  if((totalVetoVotes == 1 || totalVetoVotes == 2) || (totalSelectVotes == 1 && totalVetoVotes == 1)) {
+    // run function to slice map from current map pool object
+    // tossCurrentMap()
+  }
+}
+
+function playerVotesChecker() {
+  // Capture player votes
   DOM.p1SelectVote.addEventListener("click", function() {
-    totalSelectVotes++;
+    totalSelectVotes++
+    console.log(totalSelectVotes, "select vote count")
+    console.log(`player 1 ${p1name} chose select`)
+  })
+  DOM.p1VetoVote.addEventListener("click", function() {
+    totalVetoVotes++
+    console.log(totalVetoVotes, "veto vote count")
+    console.log(`player 1 ${p1name} chose veto`)
   })
   DOM.p2SelectVote.addEventListener("click", function() {
-    totalSelectVotes++;
-  })
-  // tally player veto votes
-  DOM.p1VetoVote.addEventListener("click", function() {
-    p1TotalVetoes--;
-    totalVetoVotes++;
+    totalSelectVotes++
+    console.log(totalSelectVotes, "select vote count")
+    console.log(`player 2 ${p2name} chose select`)
   })
   DOM.p2VetoVote.addEventListener("click", function() {
-    p2TotalVetoes--;
-    totalVetoVotes++;
+    totalVetoVotes++
+    console.log(totalVetoVotes, "veto vote count")
+    console.log(`player 2 ${p2name} chose veto`)
   })
+  voteTimer = setInterval(function() {
+    voteCountChecker()
+    }, 10000)
+
 }
 
 function displayMaps(mapPool) {
-  // await player votes
-  playerVotes()
-
   mapPool.forEach(map => {
     var markup = 
       `
@@ -114,26 +133,7 @@ function displayMaps(mapPool) {
   });
 }
 
-function displaySelectedMaps(mapPool) {
-  mapPool.forEach(map => {
-      var markup = 
-        `
-        <div class="card">
-          <div class="card-body"
-          <h2 style="text-align: center; font-size: 30px;">${map.name}</h2>
-          <img src=${map.url} style="display: block; width: 200px; height: 200px; margin-left: auto; margin-right: auto;"></img>
-          </div>
-        </div>
-        `;
-      
-      document
-        .getElementById("selected-maps")
-        .insertAdjacentHTML("beforeend", markup);
-  });
-}
-
-
-document.querySelector("#go").addEventListener("click", function(e) {
+DOM.start.addEventListener("click", function(e) {
   e.preventDefault();
 
   // Form validation
@@ -209,7 +209,9 @@ document.querySelector("#go").addEventListener("click", function(e) {
       displayMaps(zvpMaps);
     } else if (pRace1 == "Z" && pRace2 == "Z") {
       displayMaps(zvzMaps);
-    }    
+    }
+    
+    playerVotesChecker()
   }
 });
 
