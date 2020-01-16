@@ -117,8 +117,11 @@ function playerVotesChecker() {
 }
 
 function displayMaps(mapPool) {
-  mapPool.forEach(map => {
-    var markup = 
+  let i = 0;
+
+  setInterval(function(){
+    let map = mapPool[i++ % mapPool.length]
+      var markup = 
       `
       <div class="card">
         <div class="card-body"
@@ -130,7 +133,7 @@ function displayMaps(mapPool) {
       document
         .getElementById("map-info")
         .insertAdjacentHTML("beforeend", markup);
-  });
+    }, 5000);
 }
 
 DOM.start.addEventListener("click", function(e) {
@@ -189,6 +192,7 @@ DOM.start.addEventListener("click", function(e) {
 
     // map pool type selection
     if (pRace1 == "P" && pRace2 == "P") {
+      console.log('pvpMaps selected')
       displayMaps(pvpMaps);
     } else if (
       (pRace1 == "P" && pRace2 == "T") ||
