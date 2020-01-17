@@ -61,7 +61,7 @@ var zvzMaps = [
 var newRoundData = {};
 var selectedMapsPool = [];
 
-var roundType, p1name, p2name, pRace1, pRace2, bestOutOf, p1TotalVetoes, p2TotalVetoes, totalSelectVotes, totalVetoVotes, voteTimer;
+var roundType, p1name, p2name, pRace1, pRace2, bestOutOf, p1TotalVetoes, p2TotalVetoes, totalSelectVotes, totalVetoVotes, voteTimer, mapLoop, currentMapPool;
 
 p1TotalVetoes = 3
 p2TotalVetoes = 3
@@ -94,46 +94,52 @@ function playerVotesChecker() {
     totalSelectVotes++
     console.log(totalSelectVotes, "select vote count")
     console.log(`player 1 ${p1name} chose select`)
+    displayMaps(currentMapPool)
   })
   DOM.p1VetoVote.addEventListener("click", function() {
     totalVetoVotes++
     console.log(totalVetoVotes, "veto vote count")
     console.log(`player 1 ${p1name} chose veto`)
+    displayMaps(currentMapPool)
   })
   DOM.p2SelectVote.addEventListener("click", function() {
     totalSelectVotes++
     console.log(totalSelectVotes, "select vote count")
     console.log(`player 2 ${p2name} chose select`)
+    displayMaps(currentMapPool)
   })
   DOM.p2VetoVote.addEventListener("click", function() {
     totalVetoVotes++
     console.log(totalVetoVotes, "veto vote count")
     console.log(`player 2 ${p2name} chose veto`)
+    displayMaps(currentMapPool)
   })
-  voteTimer = setInterval(function() {
-    voteCountChecker()
-    }, 10000)
-
 }
 
 function displayMaps(mapPool) {
   let i = 0;
 
-  setInterval(function(){
+  const mapLoop = setInterval(function(){
     let map = mapPool[i++ % mapPool.length]
-      var markup = 
-      `
+    let markup = 
+    `
+    <div id="map-box">
       <div class="card">
         <div class="card-body"
         <h2 style="text-align: center; font-size: 30px;">${map.name}</h2>
         <img src=${map.url} style="display: block; width: 300px; height: 300px; margin-left: auto; margin-right: auto;"></img>
         </div>
       </div>
-      `;
-      document
-        .getElementById("map-info")
-        .insertAdjacentHTML("beforeend", markup);
-    }, 5000);
+    </div>
+    `;
+    document
+      .getElementById("map-info")
+      .insertAdjacentHTML("beforeend", markup);
+  }, 500);
+
+  setInterval(function(){
+    clearInterval(mapLoop)
+  }, 1000)
 }
 
 DOM.start.addEventListener("click", function(e) {
@@ -193,28 +199,33 @@ DOM.start.addEventListener("click", function(e) {
     // map pool type selection
     if (pRace1 == "P" && pRace2 == "P") {
       console.log('pvpMaps selected')
-      displayMaps(pvpMaps);
+      currentMapPool = pvpMaps
+      displayMaps(currentMapPool);
     } else if (
       (pRace1 == "P" && pRace2 == "T") ||
       (pRace1 == "T" && pRace2 == "P")
     ) {
-      displayMaps(pvtMaps);
+      currentMapPool = pvtMaps
+      displayMaps(currentMapPool);
     } else if (pRace1 == "T" && pRace2 == "T") {
-      displayMaps(tvtMaps);
+      currentMapPool = tvtMaps
+      displayMaps(currentMapPool);
     } else if (
       (pRace1 == "T" && pRace2 == "Z") ||
       (pRace1 == "Z" && pRace2 == "T")
     ) {
-      displayMaps(tvzMaps);
+      currentMapPool = tvzMaps
+      displayMaps(currentMapPool);
     } else if (
       (pRace1 == "Z" && pRace2 == "P") ||
       (pRace1 == "P" && pRace2 == "Z")
     ) {
-      displayMaps(zvpMaps);
+      currentMapPool = zvpMaps
+      displayMaps(currentMapPool);
     } else if (pRace1 == "Z" && pRace2 == "Z") {
-      displayMaps(zvzMaps);
+      currentMapPool = zvzMaps
+      displayMaps(currentMapPool);
     }
-    
     playerVotesChecker()
   }
 });
