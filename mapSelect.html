@@ -39,6 +39,7 @@
         id="raceP1"
         class="form-control"
         placeholder="Enter P, T, or Z"
+        onkeyup="this.value = this.value.toUpperCase();"
       />
       <h4>Player 2 Race</h4>
       <input
@@ -46,6 +47,7 @@
         id="raceP2"
         class="form-control"
         placeholder="Enter P, T, or Z"
+        onkeyup="this.value = this.value.toUpperCase();"
       />
       <h4>Round Type</h4>
       <input
@@ -72,84 +74,96 @@
     <!-- Map Display -->
     <div class="jumbotron">
       <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-md-8">
-          <!-- <div id="map-name"></div>
-          <div id="map-url"></div> -->
+        <div class="col-sm-3"></div>
+        <div class="col-md-6">
           <div id="map-info"></div>
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-3"></div>
       </div>
     </div>
-  
-    <div class="jumbotron">
+
+    <!-- Player Vote Boxes -->
+    <div class="jumbotron votes">
       <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
+        <h2 style="text-align: center;">VOTE</h2>
+        <div class="col-md-1"></div>
+        <div class="col-md-4 voteBox">
           <div class="row">
             <h5>P1</h5>
-            <br>
+          </div>
+          <div class="row">
             <p id="p1-name"></p>
-            <br>
+          </div>
+          <div class="row">
             <p id="p1-race"></p>
-            <br>
+          </div>
+          <div class="row">
+            <h5>Vetoes Used: </h5>
+            <p id="p1VetoVotes"></p>
+          </div>
+          <div class="row center">
             <button
               id="p1-select-vote"
               type="button"
-              class="btn btn-success p1-select-btn"
+              class="btn btn-success p1-select-btn center"
             >
               Select
             </button>
             <button
               id="p1-veto-vote"
               type="button"
-              class="btn btn-danger p1-veto-btn"
-            >
-              Veto
-            </button>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row">
-            <h5>P2</h5>
-            <br>
-            <p id="p2-name"></p>
-            <br>
-            <p id="p2-race"></p>
-            <br>
-            <button
-              id="p2-select-vote"
-              type="button"
-              class="btn btn-success p2-select-btn"
-            >
-              Select
-            </button>
-            <button
-              id="p2-veto-vote"
-              type="button"
-              class="btn btn-danger p2-veto-btn"
+              class="btn btn-danger p1-veto-btn center"
             >
               Veto
             </button>
           </div>
         </div>
         <div class="col-md-2"></div>
+        <div class="col-md-4 voteBox">
+          <div class="row">
+            <h5>P2</h5>
+          </div>
+          <div class="row">
+            <p id="p2-name"></p>
+          </div>
+          <div class="row">
+            <p id="p2-race"></p>
+          </div>
+          <div class="row">
+            <h5>Vetoes Used: </h5>
+            <p id="p2VetoVotes"></p>
+          </div>
+          <div class="row">
+            <button
+              id="p2-select-vote"
+              type="button"
+              class="btn btn-success p2-select-btn center"
+            >
+              Select
+            </button>
+            <button
+              id="p2-veto-vote"
+              type="button"
+              class="btn btn-danger p2-veto-btn center"
+            >
+              Veto
+            </button>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button id="reset" style="position:absolute;top:5px;right:5px;font-size:12px;">Reset</button></div>
       </div>
     </div>
-
+  </div>
+    <!-- Player Selected Maps -->
     <div class="jumbotron">
       <div class="row">
         <div class="col-md-12">
           <h2 class="map-pool-title">Selected Maps Pool</h2>
-          <p>
-            If 1 or 2 Select votes, append map here...
-            If 1 Select and 1 Veto, or, 2 Vetoes, slice from map array
-          </p>
-          <span id="selected-maps"></span>
         </div>
       </div>
     </div>
-  </div>
+    <div class="grid-container" id="selected-maps"></div>
 
     <hr />
     <footer class="footer"></footer>
