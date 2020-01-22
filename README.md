@@ -1,2 +1,2 @@
-# SMS
-A favorite map selector app
+# StarCraft Map Selector
+A favorite map selector app - StarCraft edition
