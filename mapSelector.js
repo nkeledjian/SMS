@@ -1,4 +1,4 @@
-// var maps = require("./maps.js")
+// import {allMaps} from './maps';
 
 // SEV - CHANGED FROM INDIVIDIAL VARS TO 1 MAIN VARIABLE CONTAINING ALL CONTENT
 var allMaps = {
