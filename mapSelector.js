@@ -401,16 +401,13 @@ var allMaps = {
 };
 
 var newRoundData = {};
-var selectedMapsPool = [];
-
 var roundType,
   p1name,
   p2name,
   pRace1,
   pRace2,
   bestOutOf,
-  voteTimer,
-  currentMapPool;
+  currentMapPool;                
 
 p1VetoCount = 0;
 p2VetoCount = 0;
@@ -425,16 +422,12 @@ const DOM = {
   p1VetoVote: document.querySelector("#p1-veto-vote"),
   p2SelectVote: document.querySelector("#p2-select-vote"),
   p2VetoVote: document.querySelector("#p2-veto-vote"),
-  start: document.querySelector("#go"),
-  resetVotes: document.querySelector("#reset")
+  go: document.querySelector("#go"),
+  resetVotes: document.querySelector("#reset"),
 };
 
 function voteCountChecker() {
   if (totalVetoVotes > 0) {
-    // run function to slice map from current map pool object
-    // tossCurrentMap()
-    //console.log('vote no');
-
     // SHOW NEXT MAP IN LIST
     hideItem("map" + currentMap);
     currentMap++;
@@ -446,10 +439,6 @@ function voteCountChecker() {
   }
 
   if (totalSelectVotes == 2) {
-    // run function to push map to Selected Maps Pool
-    // pushCurrentMap()
-    //console.log('vote yes');
-
     // MOVE MAP TO SELECTED MAPS
     document
       .getElementById("selected-maps")
@@ -485,11 +474,11 @@ function displayMaps(mapPool) {
   var itemVis = "block";
 
   // FOR EACH ITEM IN SELECTED MAP POOL ARRAY
-  // NAR - SHUFFLE THE MAP OBJECTS IN ARRAY
   mapPool
+  // NAR - SHUFFLE THE MAP OBJECTS IN ARRAY FIRST
     .sort(() => Math.random() - 0.5)
     .forEach(function() {
-      // SELECT MAP FROM SHUFFLED ARRAY
+      // THEN SELECT MAP FROM SHUFFLED ARRAY
       map = mapPool[i++ % mapPool.length];
 
       // DEFINE HTML MARKUP
@@ -537,8 +526,6 @@ DOM.p1VetoVote.addEventListener("click", function(e) {
     document.getElementById("p1VetoVotes").innerHTML = p1VetoCount;
     if (p1VetoCount >= p1VetoCountMax) {
       document.getElementById("p1-veto-vote").disabled = true;
-      // display number of vetoes used on DOM
-      // document.getElementById("p1VetoVotes").innerHTML = p1VetoCount;
     }
     document.getElementById("p1-select-vote").disabled = false;
     document.getElementById("p2-select-vote").disabled = false;
@@ -567,7 +554,6 @@ DOM.p2VetoVote.addEventListener("click", function(e) {
     document.getElementById("p2VetoVotes").innerHTML = p2VetoCount;
     if (p2VetoCount >= p2VetoCountMax) {
       document.getElementById("p2-veto-vote").disabled = true;
-      // document.getElementById("p2VetoVotes").innerHTML = p2VetoCount;
     }
     document.getElementById("p1-select-vote").disabled = false;
     document.getElementById("p2-select-vote").disabled = false;
@@ -597,20 +583,21 @@ DOM.resetVotes.addEventListener("click", function(e) {
   document.getElementById("p2-veto-vote").disabled = false;
 });
 
-DOM.start.addEventListener("click", function(e) {
+DOM.go.addEventListener("click", function(e) {
   e.preventDefault();
 
-  // Form validation
   function validateForm() {
     var isValid = true;
-    $(".form-control").each(function() {
+    $(".form-control").each(function () {
       if ($(this).val() === "") {
         isValid = false;
+        alert('please fill out all fields to continue!')
       }
     });
     return isValid;
   }
-  // If all required fields are filled
+
+  //If all required fields are filled
   if (validateForm()) {
     // Create an object for the player's data
     newRoundData = {
@@ -630,6 +617,7 @@ DOM.start.addEventListener("click", function(e) {
         .val()
         .trim()
     };
+  }
 
     p1name = newRoundData.nameP1;
     p2name = newRoundData.nameP2;
@@ -637,6 +625,7 @@ DOM.start.addEventListener("click", function(e) {
     pRace2 = newRoundData.raceP2;
     roundType = newRoundData.roundType;
 
+    // SHOW PLAYER NAMES AND 
     document.getElementById("p1-name").innerHTML = p1name;
     document.getElementById("p2-name").innerHTML = p2name;
     document.getElementById("p1-race").innerHTML = pRace1;
@@ -651,11 +640,9 @@ DOM.start.addEventListener("click", function(e) {
       bestOutOf = 7;
     }
 
-    // map pool type selection
-
     // SEV - UPDATED THE currentMapPool REFERENCES FROM INDIVIDUAL VARIABLES TO 1 MAIN VARIABLE
-
-    if (pRace1 == "P" && pRace2 == "P") {
+    // SELECT MAP POOL BASED ON PLAYER RACE 1 AND PLAYER RACE 2
+    if (pRace1 === "P" && pRace2 === "P") {
       currentMapPool = allMaps.pvp;
     } else if (
       (pRace1 == "P" && pRace2 == "T") ||
@@ -681,7 +668,7 @@ DOM.start.addEventListener("click", function(e) {
     // SEV - THIS CAN RUN ONCE AFTER currentMapPool IS SET IN THE IF STATEMENT ABOVE
     displayMaps(currentMapPool);
   }
-});
+);
 
 // SEV - SETS SELECTED MAP IN LIST AS VISIBLE
 function showItem(theItemID) {
